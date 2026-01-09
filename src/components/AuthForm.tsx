@@ -17,19 +17,24 @@ import {
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import Link from "next/link";
+import { createAccount } from "@/lib/actions/user.actions";
 
 type FormType = "sign-in" | "sign-up";
 
 const authFormSchema = (formType: FormType) => {
     return z.object({
         email: z.string().email(),
-        fullName: formType === "sign-up" ? z.string().min(2).max(50) : z.string().optional(),
+        fullName:
+            formType === "sign-up"
+                ? z.string().min(2).max(50)
+                : z.string().optional(),
     });
 };
 
 const AuthForm = ({ type }: { type: FormType }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+    const [accountId, setAccountId] = useState(null);
 
     const formSchema = authFormSchema(type);
 
@@ -44,7 +49,23 @@ const AuthForm = ({ type }: { type: FormType }) => {
 
     // 2. Define a submit handler.
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
-        console.log(values);
+        // console.log(values);
+        setIsLoading(true);
+        setErrorMessage("");
+
+        try {
+            const user = await createAccount({
+                fullName: values.fullName || "",
+                email: values.email,
+            });
+
+            setAccountId(user.accountId);
+        } catch (error) {
+            setErrorMessage("Failed to create an account. Please try again.");
+            console.error(error);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (

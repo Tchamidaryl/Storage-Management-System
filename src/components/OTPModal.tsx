@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useState } from "react";
 import {
@@ -40,7 +40,7 @@ const OTPModal = ({
         try {
             // Call your OTP verification API here
             const sessionId = await verifySecret({ accountId, password });
-            
+
             if (sessionId) {
                 router.push("/");
             }

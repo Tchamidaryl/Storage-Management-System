@@ -7,7 +7,6 @@ import { ID, Models, Query } from "node-appwrite";
 import { constructFileUrl, getFileType, parseStringify } from "../utils";
 import { revalidatePath } from "next/cache";
 import { getCurrentUser } from "./user.actions";
-import { log } from "console";
 
 const handleError = (error: unknown, message: string) => {
     console.log(error, message);
@@ -28,7 +27,7 @@ export const uploadFile = async ({
         const bucketFile = await storage.createFile(
             appwriteConfig.bucketId,
             ID.unique(),
-            inputFile
+            inputFile,
         );
 
         const fileDocument = {
@@ -48,12 +47,12 @@ export const uploadFile = async ({
                 appwriteConfig.databaseId,
                 appwriteConfig.filesCollectionId,
                 ID.unique(),
-                fileDocument
+                fileDocument,
             )
             .catch(async (error: unknown) => {
                 await storage.deleteFile(
                     appwriteConfig.bucketId,
-                    bucketFile.$id
+                    bucketFile.$id,
                 );
                 handleError(error, "Failed to create file document");
             });
@@ -83,22 +82,45 @@ export const getFiles = async () => {
 
     try {
         const currentUser = await getCurrentUser();
-        console.log("currentUser: ", currentUser);
 
         if (!currentUser) throw new Error("User not found");
 
         const queries = createQueries(currentUser);
-        console.log("Queries: ", queries);
 
         const files = await databases.listDocuments(
             appwriteConfig.databaseId,
             appwriteConfig.filesCollectionId,
-            queries
+            queries,
         );
 
-        console.log("Files: ", files);
+        // Populate owner information for each file
+        const filesWithOwner = await Promise.all(
+            files.documents.map(async (file) => {
+                try {
+                    const ownerDoc = await databases.getDocument(
+                        appwriteConfig.databaseId,
+                        appwriteConfig.usersCollectionId,
+                        file.owner,
+                    );
+                    return {
+                        ...file,
+                        owner: ownerDoc,
+                    };
+                } catch (error) {
+                    console.log("Failed to fetch owner:", error);
+                    // Return file with owner as an object with fallback values
+                    return {
+                        ...file,
+                        owner: { fullName: "Unknown User" },
+                    };
+                }
+            }),
+        );
 
-        return parseStringify(files);
+        return parseStringify({
+            ...files,
+            documents: filesWithOwner,
+        });
     } catch (error) {
         handleError(error, "Failed to get files");
     }

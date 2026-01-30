@@ -26,6 +26,9 @@ import { actionsDropdownItems } from "@/constants";
 import Link from "next/link";
 import { constructDownloadUrl } from "@/lib/utils";
 import { Input } from "./ui/input";
+import { renameFile } from "@/lib/actions/file.actions";
+import { usePathname } from "next/navigation";
+import { FileDetails } from "./ActionsModalContent";
 
 const ActionsDropdown = ({ file }: { file: Models.Document }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -34,16 +37,38 @@ const ActionsDropdown = ({ file }: { file: Models.Document }) => {
     const [name, setName] = useState(file.name);
     const [isLoading, setIsLoading] = useState(false);
 
+    const path = usePathname();
+
     const closeAllModals = () => {
         setIsModalOpen(false);
         setIsDropdownOpen(false);
         setAction(null);
-        setName(file.name)
+        setName(file.name);
     };
 
     const handleAction = async () => {
-        
-    }
+        if (!action) return;
+        setIsLoading(true);
+        let success = false;
+
+        const actions = {
+            rename: () =>
+                renameFile({
+                    fileId: file.$id,
+                    name,
+                    extension: file.extension,
+                    path,
+                }),
+            share: () => console.log("share"),
+            delete: () => console.log("delete"),
+        };
+
+        success = await actions[action.value as keyof typeof actions]();
+
+        if (success) closeAllModals();
+
+        setIsLoading(false);
+    };
 
     const renderDialogContent = () => {
         if (!action) return null;
@@ -62,11 +87,20 @@ const ActionsDropdown = ({ file }: { file: Models.Document }) => {
                             onChange={(e) => setName(e.target.value)}
                         />
                     )}
+                    { value === "details" && <FileDetails file={file} />}
                 </DialogHeader>
                 {["rename", "delete", "share"].includes(value) && (
                     <DialogFooter className="flex- flex-col gap-3 md:flex-row">
-                        <Button onClick={closeAllModals} className="modal-cancel-button">Cancel</Button>
-                        <Button onClick={handleAction} className="modal-submit-button">
+                        <Button
+                            onClick={closeAllModals}
+                            className="modal-cancel-button"
+                        >
+                            Cancel
+                        </Button>
+                        <Button
+                            onClick={handleAction}
+                            className="modal-submit-button"
+                        >
                             <p className="capitalize">{value}</p>
                             {isLoading && (
                                 <Image

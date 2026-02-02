@@ -93,7 +93,7 @@ const ActionsDropdown = ({ file }: { file: Models.Document }) => {
 
         const { value, label } = action;
         return (
-            <DialogContent className="shad-dialog button">
+            <DialogContent className="shad-dialog-button">
                 <DialogHeader className="flex flex-col gap-3">
                     <DialogTitle className="text-center text-light-100">
                         {label}
@@ -121,7 +121,7 @@ const ActionsDropdown = ({ file }: { file: Models.Document }) => {
                     )}
                 </DialogHeader>
                 {["rename", "delete", "share"].includes(value) && (
-                    <DialogFooter className="flex- flex-col gap-3 md:flex-row">
+                    <DialogFooter className="flex flex-col gap-3 md:flex-row">
                         <Button
                             onClick={closeAllModals}
                             className="modal-cancel-button"

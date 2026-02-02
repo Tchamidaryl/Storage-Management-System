@@ -146,7 +146,7 @@ export const renameFile = async ({fileId, name, extension, path} : RenameFilePro
             appwriteConfig.databaseId,
             appwriteConfig.filesCollectionId,
             fileId,
-            data: {
+            {
                 name: newName,
             },
         );
@@ -167,7 +167,7 @@ export const updateFileUsers = async ({fileId, emails, path} : UpdateFileUsersPr
             appwriteConfig.databaseId,
             appwriteConfig.filesCollectionId,
             fileId,
-            data: {
+            {
                 users: emails,
             },
         );

@@ -93,7 +93,7 @@ const ActionsDropdown = ({ file }: { file: Models.Document }) => {
 
         const { value, label } = action;
         return (
-            <DialogContent className="shad-dialog-button">
+            <DialogContent className="shad-dialog-button p-4">
                 <DialogHeader className="flex flex-col gap-3">
                     <DialogTitle className="text-center text-light-100">
                         {label}
@@ -114,9 +114,9 @@ const ActionsDropdown = ({ file }: { file: Models.Document }) => {
                         />
                     )}
                     {value === "delete" && (
-                        <p className="delete-confirmation">
+                        <p className="delete-confirmation ">
                             Are you sure you want to delete{" "}
-                            <span className="delete-file-name">{file.name}</span>?
+                            <span className="delete-file-name">{file.name}</span>{" "}?
                         </p>
                     )}
                 </DialogHeader>

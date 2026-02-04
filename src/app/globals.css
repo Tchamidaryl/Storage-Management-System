@@ -196,6 +196,7 @@
   .shad-dialog button {
     @apply focus:ring-0 focus:ring-offset-0 focus-visible:border-none outline-none focus-visible:outline-none focus-visible:ring-transparent focus-visible:ring-offset-0 !important;
   }
+
   .shad-dropdown-item {
     @apply cursor-pointer !important;
   }

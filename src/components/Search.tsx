@@ -33,13 +33,13 @@ const Search = () => {
             setOpen(true);
         };
         fetchFiles();
-    }, [debouncedQuery]);
+    }, [debouncedQuery, path, router, searchParams],);
 
     useEffect(() => {
         if (!searchQuery) {
             setQuery("");
         }
-    }, []);
+    }, [searchQuery]);
 
     const handleClickItem = (file: Models.Document) => {
         setOpen(false);
@@ -74,7 +74,7 @@ const Search = () => {
                                     key={file.$id}
                                     onClick={() => handleClickItem(file)}
                                 >
-                                    <div className="flex cursor-pointer items-center gap-4">
+                                    <div className="flex items-center gap-4 cursor-pointer">
                                         <Thumbnail
                                             type={file.type}
                                             extension={file.extension}

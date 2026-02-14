@@ -66,7 +66,7 @@ const FileUploader = ({ ownerId, accountId, className }: Props) => {
     });
 
     const handleRemoveFile = (
-        e: MouseEvent<HTMLImageElement, MouseEvent>,
+        e: MouseEvent<HTMLImageElement>,
         fileName: string
     ) => {
         e.stopPropagation();

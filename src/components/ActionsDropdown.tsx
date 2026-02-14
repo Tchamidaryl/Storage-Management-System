@@ -25,11 +25,29 @@ import { actionsDropdownItems } from "@/constants";
 import Link from "next/link";
 import { constructDownloadUrl } from "@/lib/utils";
 import { Input } from "./ui/input";
-import { deleteFile, renameFile, updateFileUsers } from "@/lib/actions/file.actions";
+import {
+    deleteFile,
+    renameFile,
+    updateFileUsers,
+} from "@/lib/actions/file.actions";
 import { usePathname } from "next/navigation";
 import { FileDetails, ShareInput } from "./ActionsModalContent";
 
-const ActionsDropdown = ({ file }: { file: Models.Document }) => {
+interface FileDocument extends Models.Document {
+    name: string;
+    size: number;
+    type: string;
+    extension: string;
+    url: string;
+    ownerId: string;
+    bucketFileId: string;
+    owner: {
+        fullName: string;
+    };
+    users: string[];
+}
+
+const ActionsDropdown = ({ file }: { file: FileDocument }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [action, setAction] = useState<ActionType | null>(null);
@@ -116,7 +134,10 @@ const ActionsDropdown = ({ file }: { file: Models.Document }) => {
                     {value === "delete" && (
                         <p className="delete-confirmation ">
                             Are you sure you want to delete{" "}
-                            <span className="delete-file-name">{file.name}</span>{" "}?
+                            <span className="delete-file-name">
+                                {file.name}
+                            </span>{" "}
+                            ?
                         </p>
                     )}
                 </DialogHeader>

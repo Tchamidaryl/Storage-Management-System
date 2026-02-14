@@ -10,13 +10,22 @@ import Thumbnail from "./Thumbnail";
 import FormattedDateTime from "./FormattedDateTime";
 import { useDebounce } from 'use-debounce';
 
+interface FileDocument extends Models.Document {
+  name: string;
+  size: number;
+  type: string;
+  extension: string;
+  url: string;
+  ownerId: string;
+}
+
 const Search = () => {
     const router = useRouter();
     const path = usePathname();
     const [query, setQuery] = useState("");
     const searchParams = useSearchParams();
     const searchQuery = searchParams.get("query") || "";
-    const [results, setResults] = useState<Models.Document[]>([]);
+    const [results, setResults] = useState<FileDocument[]>([]);
     const [open, setOpen] = useState(false);
     const [debouncedQuery] = useDebounce(query, 1000);
 
@@ -41,7 +50,7 @@ const Search = () => {
         }
     }, [searchQuery]);
 
-    const handleClickItem = (file: Models.Document) => {
+    const handleClickItem = (file: FileDocument) => {
         setOpen(false);
         setResults([]);
         router.push(

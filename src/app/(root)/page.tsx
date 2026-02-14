@@ -11,7 +11,7 @@ const dashboard = async () => {
         recentFiles = [],
     } = (await getDashboardData()) || {};
 
-    // Calculate 5GB limit (5 * 1024 * 1024 * 1024 bytes)
+    // Calculate 2GB limit (2 * 1024 * 1024 * 1024 bytes)
     const STORAGE_LIMIT = 2 * 1024 * 1024 * 1024;
 
     return (

@@ -7,7 +7,19 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import Image from "next/image";
 
-const ImageThumbnail = ({ file }: { file: Models.Document }) => (
+interface FileDocument extends Models.Document {
+    name: string;
+    size: number;
+    type: string;
+    extension: string;
+    url: string;
+    owner: {
+        fullName: string;
+    };
+    users: string[];
+}
+
+const ImageThumbnail = ({ file }: { file: FileDocument }) => (
     <div className="file-details-thumbnail">
         <Thumbnail type={file.type} extension={file.extension} url={file.url} />
         <div className="flex flex-col max-w-[250px]">
@@ -24,7 +36,7 @@ const DetailRow = ({ label, value }: { label: string; value: string }) => (
     </div>
 );
 
-export const FileDetails = ({ file }: { file: Models.Document }) => {
+export const FileDetails = ({ file }: { file: FileDocument }) => {
     return (
         <>
             <ImageThumbnail file={file} />
@@ -42,7 +54,7 @@ export const FileDetails = ({ file }: { file: Models.Document }) => {
 };
 
 interface Props {
-    file: Models.Document;
+    file: FileDocument;
     onInputChange: React.Dispatch<React.SetStateAction<string[]>>;
     onRemove: (email: string) => void;
 }

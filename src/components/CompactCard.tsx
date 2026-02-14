@@ -23,7 +23,7 @@ interface FileDocument extends Models.Document {
 }
 
 const CompactCard = ({ file }: { file: FileDocument }) => {
-    const fileData = file as Record<string, unknown>;
+    const fileData = file as unknown as Record<string, unknown>;
 
     return (
         <Link

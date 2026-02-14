@@ -6,6 +6,13 @@ import { convertFileSize, getFileTypesParams } from "@/lib/utils";
 import { Models } from "node-appwrite";
 import React from "react";
 
+interface FileDocument extends Models.Document {
+  size: number
+  type: string
+  extension: string
+  url: string
+}
+
 const page = async ({ params, searchParams }: SearchParamProps) => {
     const type = ((await params)?.type as string) || "";
     const searchText = ((await searchParams)?.query as string) || "";
@@ -15,7 +22,7 @@ const page = async ({ params, searchParams }: SearchParamProps) => {
 
     const files = await getFiles({ types, searchText, sort });
     
-    const totalSize = files.documents.reduce((sum: number, file: Models.Document) => {
+    const totalSize = files.documents.reduce((sum: number, file: FileDocument) => {
         return sum + (file.size || 0)
     }, 0)
     return (

@@ -11,6 +11,13 @@ interface FileDocument extends Models.Document {
     type: string;
     extension: string;
     url: string;
+    name: string;
+    ownerId: string;
+    bucketFileId: string;
+    owner: {
+        fullName: string;
+    }
+    users: string[];
 }
 
 const page = async ({ params, searchParams }: SearchParamProps) => {
@@ -52,7 +59,7 @@ const page = async ({ params, searchParams }: SearchParamProps) => {
             {/* Render the files */}
             {files.total > 0 ? (
                 <section className="file-list">
-                    {files.documents.map((file: Models.Document) => (
+                    {files.documents.map((file: FileDocument) => (
                         <Card key={file.$id} file={file} />
                     ))}
                 </section>

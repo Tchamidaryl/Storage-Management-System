@@ -3,14 +3,28 @@
 import { Models } from "node-appwrite";
 import CompactCard from "./CompactCard";
 
+interface FileDocument extends Models.Document {
+  name: string;
+  size: number;
+  type: string;
+  extension: string;
+  url: string;
+    ownerId: string;
+    bucketFileId: string;
+    owner: {
+        fullName: string;
+    }
+    users: string[];
+}
+
 interface RecentFilesCardProps {
-    files: Models.Document[];
+    files: FileDocument[];
 }
 
 const RecentFilesCard = ({ files }: RecentFilesCardProps) => {
     return (
         <div className="dashboard-recent-files min-h-[400px] sm:min-h-[500px] lg:min-h-[650px]">
-            <h3 className="h5 mb-4 text-sm sm:text-base">Recent Uploads</h3>
+            <h3 className="mb-4 text-sm h5 sm:text-base">Recent Uploads</h3>
             <div className="space-y-2 sm:space-y-3">
                 {files && files.length > 0 ? (
                     files.map((file) => (
@@ -19,7 +33,7 @@ const RecentFilesCard = ({ files }: RecentFilesCardProps) => {
                         </div>
                     ))
                 ) : (
-                    <div className="flex-center h-40">
+                    <div className="h-40 flex-center">
                         <p className="body-2 text-light-200">
                             No files uploaded yet
                         </p>

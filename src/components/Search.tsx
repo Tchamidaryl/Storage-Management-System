@@ -8,15 +8,15 @@ import { getFiles } from "@/lib/actions/file.actions";
 import { Models } from "node-appwrite";
 import Thumbnail from "./Thumbnail";
 import FormattedDateTime from "./FormattedDateTime";
-import { useDebounce } from 'use-debounce';
+import { useDebounce } from "use-debounce";
 
 interface FileDocument extends Models.Document {
-  name: string;
-  size: number;
-  type: string;
-  extension: string;
-  url: string;
-  ownerId: string;
+    name: string;
+    size: number;
+    type: string;
+    extension: string;
+    url: string;
+    ownerId: string;
 }
 
 const Search = () => {
@@ -37,12 +37,15 @@ const Search = () => {
                 return router.push(path.replace(searchParams.toString(), ""));
             }
 
-            const files = await getFiles({types: [], searchText: debouncedQuery });
+            const files = await getFiles({
+                types: [],
+                searchText: debouncedQuery,
+            });
             setResults(files.documents);
             setOpen(true);
         };
         fetchFiles();
-    }, [debouncedQuery, path, router, searchParams],);
+    }, [debouncedQuery, path, router, searchParams]);
 
     useEffect(() => {
         if (!searchQuery) {

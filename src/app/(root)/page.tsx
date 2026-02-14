@@ -12,20 +12,20 @@ const dashboard = async () => {
     } = (await getDashboardData()) || {};
 
     // Calculate 5GB limit (5 * 1024 * 1024 * 1024 bytes)
-    const STORAGE_LIMIT = 5 * 1024 * 1024 * 1024;
+    const STORAGE_LIMIT = 2 * 1024 * 1024 * 1024;
 
     return (
-        <div className="space-y-6 pb-10">
+        <div className="pb-10 space-y-6">
             <div>
                 <h1 className="h1">Dashboard</h1>
-                <p className="body-2 text-light-200 mt-2">
+                <p className="mt-2 body-2 text-light-200">
                     Welcome back! Here&apos;s your storage overview
                 </p>
             </div>
 
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 xl:gap-8">
                 {/* Left Section - Storage Chart and File Type Cards */}
-                <div className="lg:col-span-2 -space-y-1">
+                <div className="-space-y-1 lg:col-span-2">
                     {/* Storage Chart */}
                     <div className="">
                         <DashboardStorageChart

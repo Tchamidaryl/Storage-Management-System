@@ -25,7 +25,7 @@ const FileUploader = ({ ownerId, accountId, className }: Props) => {
     const onDrop = useCallback(
         async (acceptedFiles: File[]) => {
             // Do something with the files
-            setFiles(acceptedFiles);
+            setFiles((prevFiles) => [...prevFiles, ...acceptedFiles]);
 
             const uploadPromises = acceptedFiles.map(async (file) => {
                 if (file.size > MAX_FILE_SIZE) {
@@ -35,7 +35,7 @@ const FileUploader = ({ ownerId, accountId, className }: Props) => {
 
                     return toast({
                         description: (
-                            <p className="body-2 text-white">
+                            <p className="text-white body-2">
                                 <span className="font-semibold">
                                     {file.name}
                                 </span>{" "}
@@ -113,6 +113,7 @@ const FileUploader = ({ ownerId, accountId, className }: Props) => {
                                             alt="loader"
                                             width={80}
                                             height={26}
+                                            unoptimized
                                         />
                                     </div>
                                 </div>

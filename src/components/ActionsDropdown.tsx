@@ -127,6 +127,7 @@ const ActionsDropdown = ({ file }: { file: FileDocument }) => {
                     {value === "share" && (
                         <ShareInput
                             file={file}
+                            emails={emails}
                             onInputChange={setEmails}
                             onRemove={handleRemoveUser}
                         />
@@ -197,6 +198,9 @@ const ActionsDropdown = ({ file }: { file: FileDocument }) => {
                                 className="shad-dropdown-item"
                                 onClick={() => {
                                     setAction(actionItem);
+                                    if (actionItem.value === "share") {
+                                        setEmails(file.users || []);
+                                    }
 
                                     if (
                                         [

@@ -1,11 +1,12 @@
 import { Models } from "node-appwrite";
-import React from "react";
+import React, { useState } from "react";
 import Thumbnail from "./Thumbnail";
 import FormattedDateTime from "./FormattedDateTime";
 import { convertFileSize, formatDateTime } from "@/lib/utils";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import Image from "next/image";
+import { Plus, PlusIcon } from "lucide-react";
 
 interface FileDocument extends Models.Document {
     name: string;
@@ -55,11 +56,34 @@ export const FileDetails = ({ file }: { file: FileDocument }) => {
 
 interface Props {
     file: FileDocument;
+    emails: string[];
     onInputChange: React.Dispatch<React.SetStateAction<string[]>>;
     onRemove: (email: string) => void;
 }
 
-export const ShareInput = ({ file, onInputChange, onRemove }: Props) => {
+export const ShareInput = ({
+    file,
+    emails,
+    onInputChange,
+    onRemove,
+}: Props) => {
+    const [inputValue, setInputValue] = React.useState("");
+
+    const handleAddEmail = () => {
+        const email = inputValue.trim();
+        if (email && !emails.includes(email)) {
+            onInputChange([...emails, email]);
+            setInputValue("");
+        }
+    };
+
+    const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            handleAddEmail();
+        }
+    };
+
     return (
         <>
             <ImageThumbnail file={file} />
@@ -68,23 +92,31 @@ export const ShareInput = ({ file, onInputChange, onRemove }: Props) => {
                 <p className="pl-1 subtitle-2 text-light-100">
                     Share file with other users
                 </p>
-                <Input
-                    type="email"
-                    placeholder="Enter email address"
-                    onChange={(e) =>
-                        onInputChange(e.target.value.trim().split(","))
-                    }
-                    className="share-input-field"
-                />
+                <div className="flex items-center gap-2">
+                    <Input
+                        type="email"
+                        placeholder="Enter email address"
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)}
+                        onKeyPress={handleKeyPress}
+                        className="share-input-field"
+                    />
+                    <Button
+                        onClick={handleAddEmail}
+                        className="bg-transparent border-none hover:bg-transparent text-slate-950"
+                    >
+                        <Plus className="" />
+                    </Button>
+                </div>
                 <div className="pt-4">
                     <div className="flex justify-between">
                         <p className="subtitle-2 text-light-100">Share with</p>
                         <p className="subtitle-2 text-light-200">
-                            {file.users.length} users
+                            {emails.length} users
                         </p>
                     </div>
                     <ul className="pt-2">
-                        {file.users.map((email: string) => (
+                        {emails.map((email: string) => (
                             <li
                                 key={email}
                                 className="flex items-center justify-between gap-2"

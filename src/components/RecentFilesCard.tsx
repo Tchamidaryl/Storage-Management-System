@@ -4,11 +4,11 @@ import { Models } from "node-appwrite";
 import CompactCard from "./CompactCard";
 
 interface FileDocument extends Models.Document {
-  name: string;
-  size: number;
-  type: string;
-  extension: string;
-  url: string;
+    name: string;
+    size: number;
+    type: string;
+    extension: string;
+    url: string;
     ownerId: string;
     bucketFileId: string;
     owner: {

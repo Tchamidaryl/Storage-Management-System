@@ -1,4 +1,3 @@
-// import Renderer from "@/components/Renderer";
 import Card from "@/components/Card";
 import Sort from "@/components/Sort";
 import { getFiles } from "@/lib/actions/file.actions";

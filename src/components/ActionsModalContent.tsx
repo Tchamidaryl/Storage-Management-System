@@ -1,12 +1,12 @@
 import { Models } from "node-appwrite";
-import React, { useState } from "react";
+import React from "react";
 import Thumbnail from "./Thumbnail";
 import FormattedDateTime from "./FormattedDateTime";
 import { convertFileSize, formatDateTime } from "@/lib/utils";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import Image from "next/image";
-import { Plus, PlusIcon } from "lucide-react";
+import { Plus } from "lucide-react";
 
 interface FileDocument extends Models.Document {
     name: string;

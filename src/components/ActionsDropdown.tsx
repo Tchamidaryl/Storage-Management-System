@@ -133,7 +133,7 @@ const ActionsDropdown = ({ file }: { file: FileDocument }) => {
                         />
                     )}
                     {value === "delete" && (
-                        <p className="delete-confirmation ">
+                        <p className="delete-confirmation">
                             Are you sure you want to delete{" "}
                             <span className="delete-file-name">
                                 {file.name}

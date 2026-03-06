@@ -8,7 +8,7 @@
     }
 
     body {
-        @apply bg-white text-dark-200 min-h-screen;
+        @apply min-h-screen bg-white text-dark-200;
     }
 
     .custom-scrollbar::-webkit-scrollbar {
@@ -150,7 +150,7 @@
 
     /* ===== HELPER CLASSES */
     .container {
-        @apply mx-auto max-w-7xl px-5;
+        @apply px-5 mx-auto max-w-7xl;
     }
     .primary-btn {
         @apply bg-brand hover:bg-brand-100 transition-all rounded-full button !important;
@@ -282,7 +282,7 @@
         @apply text-center text-light-100 !important;
     }
     .delete-file-name {
-        @apply font-medium text-brand-100 !important;
+        @apply inline-block truncate max-w-[200px] font-medium text-brand-100 align-middle !important;
     }
     .modal-cancel-button {
         @apply h-[52px] flex-1 rounded-full bg-white text-light-100 hover:bg-transparent !important;

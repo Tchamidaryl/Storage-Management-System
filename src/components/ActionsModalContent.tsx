@@ -101,18 +101,17 @@ export const ShareInput = ({
                         onKeyPress={handleKeyPress}
                         className="share-input-field"
                     />
-                    <Button
-                        onClick={handleAddEmail}
-                        className="bg-transparent border-none hover:bg-transparent text-slate-950"
-                    >
+                    <Button onClick={handleAddEmail} className="py-6 bg-transparent border-transparent border-none rounded-full text-slate-950 hover:bg-red hover:text-slate-100">
                         <Plus className="" />
+                        Add
                     </Button>
                 </div>
                 <div className="pt-4">
                     <div className="flex justify-between">
                         <p className="subtitle-2 text-light-100">Share with</p>
                         <p className="subtitle-2 text-light-200">
-                            {emails.length} users
+                            {emails.length}{" "}
+                            {emails.length > 1 ? "users" : "user"}
                         </p>
                     </div>
                     <ul className="pt-2">

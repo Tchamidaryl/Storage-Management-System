@@ -4,6 +4,7 @@ import { getDashboardData } from "@/lib/actions/file.actions";
 import DashboardStorageChart from "@/components/DashboardStorageChart";
 import FileTypeCard from "@/components/FileTypeCard";
 import RecentFilesCard from "@/components/RecentFilesCard";
+import Link from "next/link";
 
 const dashboard = async () => {
     const {
@@ -37,22 +38,30 @@ const dashboard = async () => {
 
                     {/* File Type Cards */}
                     <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 lg:grid-cols-4 lg:gap-4">
-                        <FileTypeCard
-                            type="document"
-                            size={storageByType.document || 0}
-                        />
-                        <FileTypeCard
-                            type="image"
-                            size={storageByType.image || 0}
-                        />
-                        <FileTypeCard
-                            type="media"
-                            size={storageByType.media || 0}
-                        />
-                        <FileTypeCard
-                            type="other"
-                            size={storageByType.other || 0}
-                        />
+                        <Link href="./documents">
+                            <FileTypeCard
+                                type="document"
+                                size={storageByType.document || 0}
+                            />
+                        </Link>
+                        <Link href="./images">
+                            <FileTypeCard
+                                type="image"
+                                size={storageByType.image || 0}
+                            />
+                        </Link>
+                        <Link href="./media">
+                            <FileTypeCard
+                                type="media"
+                                size={storageByType.media || 0}
+                            />
+                        </Link>
+                        <Link href="others">
+                            <FileTypeCard
+                                type="other"
+                                size={storageByType.other || 0}
+                            />
+                        </Link>
                     </div>
                 </div>
 
